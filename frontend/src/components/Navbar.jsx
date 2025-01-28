@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {useAuthStore} from '../store/useAuthStore.js';
 
-const Navbar = ({ isAuthenticated = true, onLogout }) => {
+const Navbar = ({ isAuthenticated=true }) => {
+
+  const {logout}=useAuthStore();
+  
   return (
     <div className="navbar bg-base-100 shadow-md sticky top-0 z-50">
       {/* Left Section: Logo and Title */}
@@ -72,7 +76,7 @@ const Navbar = ({ isAuthenticated = true, onLogout }) => {
       <div className="navbar-end">
         {isAuthenticated ? (
           <button
-            onClick={onLogout}
+            onClick={logout}
             className="btn btn-error btn-sm text-white"
           >
             Logout

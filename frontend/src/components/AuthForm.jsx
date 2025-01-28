@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const AuthForm = ({ title, onSubmit, buttonText, isSignup }) => {
   const [formData, setFormData] = useState({
-    fullName: '',
+    fullname: '',
     email: '',
     password: '',
   });
@@ -30,10 +30,10 @@ const AuthForm = ({ title, onSubmit, buttonText, isSignup }) => {
                 </label>
                 <input
                   type="text"
-                  name="fullName"
+                  name="fullname"
                   placeholder="Enter your full name"
                   className="input input-bordered w-full"
-                  value={formData.fullName}
+                  value={formData.fullname}
                   onChange={handleChange}
                   required={isSignup} // Required only during Signup
                 />

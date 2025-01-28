@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import {axiosInstance} from "axios";
+import {axiosInstance} from "../lib/axios.js";
 import toast from "react-hot-toast";
 
 const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:3000/api" : "/api";
@@ -19,7 +19,7 @@ export const useAuthStore = create((set)=>({
             toast.error(error.response?.data?.message || "Sign up failed");
         }
     },
-
+    
     //user login
     login:async (data)=>{
         try {

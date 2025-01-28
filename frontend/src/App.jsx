@@ -9,24 +9,48 @@ import HomePage from './pages/HomePage';
 import AllProductList from './pages/AllProductList';
 import MyProductList from './pages/MyProductList';
 import Footer from './components/Footer';
+import { useAuthStore } from './store/useAuthStore.js';
+
+
+//for hot toast
+import { Toaster } from 'react-hot-toast';
 
 
 
 const App = () => {
+  const {authUser} = useAuthStore();
+  // console.log(authUser);
+
   return (
     <div className='flex flex-col h-screen space-between'>
-      <Navbar />
+      <Navbar isAuthenticated={authUser}/>
       <Routes className="flex-grow">
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/all-products" element={<AllProductList />} />
-        <Route path="/my-products" element={<MyProductList />} />
-        <Route path="/product/new" element={<ProductForm />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route
+              path="/login"
+              element={!authUser ? <LoginPage /> : <Navigate to="/my-products" />}
+            />
+            <Route
+              path="/signup"
+              element={!authUser ? <SignupPage /> : <Navigate to="/my-products" />}
+            />
+            <Route path="/all-products" element={<AllProductList />} />
+            <Route
+              path="/my-products"
+              element={authUser ? <MyProductList /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/product/new"
+              element={authUser ? <ProductForm /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/product/:id"
+              element={authUser ? <ProductDetails /> : <Navigate to="/login" />}
+            />
+            <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Footer />
+      <Toaster />
     </div>
   )
 }

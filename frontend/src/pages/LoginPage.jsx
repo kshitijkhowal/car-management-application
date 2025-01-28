@@ -1,10 +1,14 @@
 import React from 'react';
 import AuthForm from '../components/AuthForm';
+import { useAuthStore } from '../store/useAuthStore';
 
 const LoginPage = () => {
+
+  const {login}=useAuthStore();
+
   const handleLogin = (formData) => {
-    // Call your API or handle login logic here
-    console.log('Login Data:', formData);
+    // console.log('Login Data:', formData);
+    login(formData);
   };
 
   return (
