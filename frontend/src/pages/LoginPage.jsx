@@ -1,9 +1,20 @@
-import React from 'react'
+import React from 'react';
+import AuthForm from '../components/AuthForm';
 
 const LoginPage = () => {
-  return (
-    <div>LoginPage</div>
-  )
-}
+  const handleLogin = (formData) => {
+    // Call your API or handle login logic here
+    console.log('Login Data:', formData);
+  };
 
-export default LoginPage
+  return (
+    <AuthForm
+      title="Login to Your Account"
+      onSubmit={handleLogin}
+      buttonText="Login"
+      isSignup={false} // Not a signup form
+    />
+  );
+};
+
+export default LoginPage;
