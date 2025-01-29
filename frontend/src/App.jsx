@@ -1,5 +1,5 @@
-import React from 'react'
-import { Router,Routes,Navigate,Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Navigate, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ProductForm from './pages/ProductForm';
@@ -11,22 +11,24 @@ import MyProductList from './pages/MyProductList';
 import Footer from './components/Footer';
 import { useAuthStore } from './store/useAuthStore.js';
 
-
-//for hot toast
+// For hot toast notifications
 import { Toaster } from 'react-hot-toast';
 
-
-
 const App = () => {
-  const {authUser} = useAuthStore();
-  // console.log(authUser);
+  const { authUser } = useAuthStore(); // Zustand store for authentication state
 
   return (
-    <div className='flex flex-col h-screen space-between'>
-      <Navbar isAuthenticated={authUser}/>
-      <Routes className="flex-grow">
-        <Route path="/" element={<HomePage />} />
-        <Route
+    // <Router>
+      <div className="flex flex-col min-h-screen">
+        {/* Navbar */}
+        <Navbar isAuthenticated={!!authUser} />
+
+        {/* Main Content */}
+        <div className="flex-grow">
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<HomePage />} />
+            <Route
               path="/login"
               element={!authUser ? <LoginPage /> : <Navigate to="/my-products" />}
             />
@@ -34,6 +36,8 @@ const App = () => {
               path="/signup"
               element={!authUser ? <SignupPage /> : <Navigate to="/my-products" />}
             />
+
+            {/* Protected Routes */}
             <Route path="/all-products" element={<AllProductList />} />
             <Route
               path="/my-products"
@@ -47,12 +51,20 @@ const App = () => {
               path="/product/:id"
               element={authUser ? <ProductDetails /> : <Navigate to="/login" />}
             />
-            <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-      <Footer />
-      <Toaster />
-    </div>
-  )
-}
 
-export default App
+            {/* Fallback Route */}
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </div>
+
+        {/* Footer */}
+        <Footer />
+
+        {/* Toast Notifications */}
+        <Toaster />
+      </div>
+    // </Router>
+  );
+};
+
+export default App;
